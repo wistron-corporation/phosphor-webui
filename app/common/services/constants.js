@@ -111,13 +111,6 @@ window.angular && (function(angular) {
       },
       CERTIFICATE: {
         KEY_BIT_LENGTH: [2048],
-        KEY_USAGE: [
-          'ClientAuthentication', 'CodeSigning', 'CRLSigning',
-          'DataEncipherment', 'DecipherOnly', 'DigitalSignature',
-          'EmailProtection', 'EncipherOnly', 'KeyAgreement', 'KeyCertSign',
-          'KeyEncipherment', 'NonRepudiation', 'OCSPSigning',
-          'ServerAuthentication', 'TimeStamping'
-        ],
         KEY_PAIR_ALGORITHM: ['EC', 'RSA'],
         KEY_CURVE_ID: ['prime256v1', 'secp521r1', 'secp384r1']
       },
