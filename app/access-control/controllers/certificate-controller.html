@@ -5,8 +5,8 @@
   </div>
   <div ng-repeat="certificate in certificates | filter:{isExpiring:true}" class="row column">
     <div class="small-12 alert alert-warning" role="alert">
-      <icon aria-hidden="true" file="icon-warning.svg" /> The uploaded {{certificate.name}} is expiring in {{getDays(certificate.ValidNotAfter) === 0 ? 'less than one day!'
-      : getDays(certificate.ValidNotAfter) + ' days!'}}. Consider replacing it with a new certificate.
+      <icon aria-hidden="true" file="icon-warning.svg" /> The uploaded {{certificate.name}} is expiring in {{getDays(certificate.ValidNotAfter) === 0 ? 'less than one
+      day!' : getDays(certificate.ValidNotAfter) + ' days!'}}. Consider replacing it with a new certificate.
     </div>
   </div>
   <div ng-repeat="certificate in certificates|filter:{isExpired:true}" class="row column">
@@ -30,6 +30,12 @@
         <div class="row column">
           <div class="certificate__type-header">
             Certificate
+          </div>
+          <div class="certificate__issue-header">
+            Issued by
+          </div>
+          <div class="certificate__issue-header">
+            Issued to
           </div>
           <div class="certificate__date-header">
             Valid from
@@ -99,10 +105,9 @@
     </button>
 
     <!-- CSR Code display content-->
+
     <div ng-if="displayCSRCode==true">
-      <div class="page-header add-csr-code__header">
-        <h2>Certificate Signing Request (CSR)</h2>
-      </div>
+      <h2 class="page-header">Certificate Signing Request (CSR)</h2>
       <div class="modal__content add-csr__container">
         <span id="csrCode" class="add-csr__container-csr-code">{{csrCode}}</span>
       </div>
@@ -139,7 +144,8 @@
                 <select class="add-csr__select" id="cert__type" name="cert__type" ng-model="newCSR.certificateCollection" required>
                   <option class="courier-bold" ng-value="default" ng-model="selectOption">Select an option</option>
                   <!-- Do not show CA certificate as an option. Only a certificate authority can generate a CA certificate (known as TrustStore Certificate in Redfish) -->
-                  <option class="courier-bold" ng-value="type" ng-repeat="type in allCertificateTypes" ng-if="type.Description !== 'TrustStore Certificate'">
+                  <option class="courier-bold" ng-value="type" ng-repeat="type in allCertificateTypes"
+                    ng-if="type.Description !== 'TrustStore Certificate'">
                     {{type.name}}</option>
                 </select>
                 <div ng-messages="add__csr__form.cert__type.$error" class="form-error" ng-class="{'visible' : add__csr__form.cert__type.$touched}">
@@ -273,6 +279,7 @@
                     <p ng-message="required">Field is required</p>
                   </div>
                 </div>
+
               </div>
           </fieldset>
           </div>
