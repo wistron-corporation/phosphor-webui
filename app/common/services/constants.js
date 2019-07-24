@@ -117,7 +117,7 @@ window.angular && (function(angular) {
         HOST_OFF_IMMEDIATE: 1000 * 60 * 2  // 2 mins
       },
       CERTIFICATE: {
-        KEY_BIT_LENGTH: [512, 1024, 2048, 4096, 8192, 16384],
+        KEY_BIT_LENGTH: [2048],
         KEY_USAGE: [
           'ClientAuthentication', 'CodeSigning', 'CRLSigning',
           'DataEncipherment', 'DecipherOnly', 'DigitalSignature',
