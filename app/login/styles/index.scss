@@ -28,6 +28,14 @@
       margin: 0 auto;
     }
   }
+  .builton__logo {
+    max-width: 200px;
+    display: block;
+    margin: 0 auto 2em;
+    @include mediaQuery(small) {
+      margin: 0 auto;
+    }
+  }
 
   // Must be applied to the <main> element in the app
   // Required to create an elegant page transition
