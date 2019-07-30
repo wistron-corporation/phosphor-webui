@@ -225,22 +225,28 @@
                     <p ng-message="required">Field is required</p>
                   </div>
 
-                  <div ng-if="newCSR.keyPairAlgorithm =='EC'">
+                  <div ng-if="newCSR.keyPairAlgorithm == 'EC'">
                     <label for="keyCurveId" class="add-csr__label">Key Curve ID</label>
-                    <select class=".add-csr__input-no-validation" ng-model="newCSR.keyCurveId" id="keyCurveId" name="keyCurveId">
+                    <select class="add-csr__select" ng-model="newCSR.keyCurveId" id="keyCurveId" name="keyCurveId" required>
                       <option class="courier-bold" ng-value="">None</option>
                       <option class="courier-bold" ng-value="data" ng-repeat="data in keyCurveId">{{data}}</option>
                     </select>
+                    <div ng-messages="add__csr__form.keyCurveId.$error" class="form-error" ng-class="{'visible' : add__csr__form.keyCurveId.$touched}">
+                      <p ng-message="required">Field is required</p>
+                    </div>
                   </div>
 
-                  <label for="keyBitLength" class="add-csr__label">Key Bit Length *</label>
-                  <select class="add-csr__select" ng-model="newCSR.keyBitLength" id="keyBitLength" name="keyBitLength" required>
-                    <option class="courier-bold" ng-value="">Select an option</option>
-                    <option class="courier-bold" ng-value="data" ng-repeat="data in keyBitLength">{{data}}</option>
-                  </select>
-                  <div ng-messages="add__csr__form.keyBitLength.$error" class="form-error" ng-class="{'visible' : add__csr__form.keyBitLength.$touched}">
-                    <p ng-message="required">Field is required</p>
+                  <div ng-if="newCSR.keyPairAlgorithm == 'RSA'">
+                    <label for="keyBitLength" class="add-csr__label">Key Bit Length *</label>
+                    <select class="add-csr__select" ng-model="newCSR.keyBitLength" id="keyBitLength" name="keyBitLength" required>
+                      <option class="courier-bold" ng-value="">Select an option</option>
+                      <option class="courier-bold" ng-value="data" ng-repeat="data in keyBitLength">{{data}}</option>
+                    </select>
+                    <div ng-messages="add__csr__form.keyBitLength.$error" class="form-error" ng-class="{'visible' : add__csr__form.keyBitLength.$touched}">
+                      <p ng-message="required">Field is required</p>
+                    </div>
                   </div>
+
                   <label for="keyUsage" class="add-csr__label">Key Usage</label>
                   <div class="add-csr__text-helper">Hold the Ctrl, Command or Shift keys while clicking to select or deselect options.</div>
                   <select class="add-csr__multiselect" ng-model="newCSR.keyUsage" multiple id="keyUsage">
