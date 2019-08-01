@@ -121,6 +121,8 @@ window.angular && (function(angular) {
         '$routeProvider', '$locationProvider',
         function($routeProvider, $locationProvider) {
           $locationProvider.hashPrefix('');
+          $routeProvider.when(
+              '/unauthorized', {'template': require('./403.html')})
           $routeProvider.otherwise({'redirectTo': '/login'});
         }
       ])

@@ -38,12 +38,6 @@ window.angular && (function(angular) {
           'name': 'CA Certificate'
         }
       ],
-      CHASSIS_POWER_STATE: {
-        on: 'On',
-        on_code: 'xyz.openbmc_project.State.Chassis.PowerState.On',
-        off: 'Off',
-        off_code: 'xyz.openbmc_project.State.Chassis.PowerState.Off'
-      },
       HOST_STATE_TEXT: {
         on: 'Running',
         on_code: 'xyz.openbmc_project.State.Host.HostState.Running',
@@ -111,7 +105,6 @@ window.angular && (function(angular) {
       TIMEOUT: {
         ACTIVATION: 1000 * 60 * 10,        // 10 mins
         DOWNLOAD_IMAGE: 1000 * 60 * 2,     // 2 mins
-        CHASSIS_OFF: 1000 * 60 * 5,        // 5 mins
         HOST_ON: 1000 * 60 * 5,            // 5 mins
         HOST_OFF: 1000 * 60 * 5,           // 5 mins
         HOST_OFF_IMMEDIATE: 1000 * 60 * 2  // 2 mins
@@ -381,8 +374,6 @@ window.angular && (function(angular) {
       ],
       MESSAGES: {
         POLL: {
-          CHASSIS_OFF_TIMEOUT:
-              'Time out. Chassis did not reach power off state in allotted time.',
           HOST_ON_TIMEOUT:
               'Time out. System did not reach Running state in allotted time.',
           HOST_OFF_TIMEOUT:

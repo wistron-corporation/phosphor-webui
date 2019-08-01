@@ -5,7 +5,7 @@
 }
 
 .ldap__configure-settings {
-  background-color: $lightgrey;
+  background-color: $base-02--06;
   padding-top: 1.5em;
   padding-bottom: 1.5em;
   margin-top: 1em;
@@ -14,7 +14,7 @@
 
 .ldap__server-info {
   @media (min-width: 1024px) {
-    border-left: 1px solid $medgrey;
+    border-left: 1px solid $border-color-01;
   }
 
   .control-radio {
@@ -33,7 +33,7 @@
     text-transform: none;
     font-weight: 400;
     font-size: 16px;
-    color: $black;
+    color: $primary-dark;
   }
   .control__indicator {
     top: 5px;
@@ -54,12 +54,12 @@
   }
 
   .btn-secondary {
-    background-color: $white;
+    background-color: $primary-light;
   }
 
   .btn-secondary:disabled {
-    color: $btn__disabled-txt;
-    border-color: $btn__disabled-border;
+    color: $base-02--03;
+    border-color: $border-color-02;
   }
 }
 
@@ -75,7 +75,7 @@
     font-size: 14px;
   }
   p {
-    color: $darkgrey;
+    color: $base-02--02;
     text-transform: uppercase;
     font-weight: 700;
     font-size: 0.75em;
@@ -88,14 +88,14 @@
   text-transform: none;
   font-weight: 400;
   font-size: 16px;
-  color: $black;
+  color: $primary-dark;
 }
 
 .ldap__control-check {
   text-transform: none;
   font-weight: 400;
   font-size: 16px;
-  color: $black;
+  color: $primary-dark;
 
   .control__indicator {
     top: 11px;
@@ -126,7 +126,7 @@
 }
 
 .password-toggle {
-  color: $primebtn__bg;
+  color: $base-01--03;
   font-size: 0.8em;
   float: right;
   position: relative;
@@ -136,14 +136,14 @@
 
 .password-toggle.disabled {
   background: transparent;
-  color: $btn__disabled-txt;
+  color: $base-02--03;
   border: none;
 }
 
 .ldap-groups {
   .ldap__table {
-    border-left: 1px solid $medgrey;
-    border-right: 1px solid $medgrey;
+    border-left: 1px solid $border-color-01;
+    border-right: 1px solid $border-color-01;
 
     .empty__logs {
       margin-top: 0;
@@ -151,9 +151,9 @@
 
     .table__row-header {
       width: 100%;
-      border-bottom: 1px solid $medgrey;
-      background-color: $darkbg__primary;
-      color: $white;
+      border-bottom: 1px solid $border-color-01;
+      background-color: $primary-dark;
+      color: $primary-light;
       font-weight: 700;
       padding: 0;
     }
@@ -164,7 +164,7 @@
 
     .table__row-value {
       width: 100%;
-      border-bottom: 1px solid $medgrey;
+      border-bottom: 1px solid $border-color-01;
     }
 
     .table__cell-ldap {
@@ -208,7 +208,7 @@
 
   .btn-add-group,
   .btn-remove-group {
-    color: $primebtn__bg;
+    color: $base-01--03;
     padding: 0.75em 0;
   }
 
@@ -231,7 +231,7 @@
     width: 100%;
     padding-top: 2em;
     margin-top: 1.5em;
-    border-top: 1px solid $medgrey;
+    border-top: 1px solid $border-color-01;
     button {
       display: block;
       float: right;
@@ -243,12 +243,12 @@
   .sort-descending {
     display: block;
     padding: 0;
-    color: $white;
+    color: $primary-light;
     font-size: 1em;
     transform: rotate(-90deg);
 
     &:hover {
-      color: $darkbg__accent;
+      color: $primary-accent;
     }
 
     &:after {
@@ -257,7 +257,7 @@
 
     &:focus {
       outline: 0;
-      color: $darkbg__accent;
+      color: $primary-accent;
     }
   }
 

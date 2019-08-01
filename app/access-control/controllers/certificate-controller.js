@@ -12,6 +12,7 @@ window.angular && (function(angular) {
   angular.module('app.accessControl').controller('certificateController', [
     '$scope', 'APIUtils', '$q', 'Constants', 'toastService', '$timeout',
     function($scope, APIUtils, $q, Constants, toastService, $timeout) {
+
       $scope.loading = false;
       $scope.certificates = [];
       $scope.availableCertificateTypes = [];
@@ -165,7 +166,7 @@ window.angular && (function(angular) {
               $scope.addCSRModal = false;
               toastService.error(
                   'Unable to generate CSR. Log out and try again.');
-              $scope.resetModal()
+              $scope.resetCSRModal()
               console.log(JSON.stringify(error));
             })
       };

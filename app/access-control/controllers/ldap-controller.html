@@ -8,10 +8,9 @@
   </div>
   <div class="row column">
     <h2 class="page-subhead">
-        Settings
+      Settings
     </h2>
   </div>
-  
   <div class="row column">
     <label class="control-check ldap__control-check">
       <input type="checkbox" id="enable-ldap-checkbox"
@@ -129,7 +128,8 @@
             <div class="column ldap__configuration-buttons">
               <button type="button" class="btn btn-primary" ng-disabled="!ldap__configuration.$valid"
                 ng-click="$parent.submitted=true; ldap__configuration.$valid && saveLdapSettings(); ldap__configuration.$setUntouched()">Save</button>
-              <button type="button" class="btn btn-secondary" ng-click="loadLdap(); ldap__configuration.$setUntouched()">Reset</button>
+              <button type="button" class="btn btn-secondary"
+                ng-click="loadLdap(); ldap__configuration.$setUntouched()">Reset</button>
             </div>
       </fieldset>
     </form>
