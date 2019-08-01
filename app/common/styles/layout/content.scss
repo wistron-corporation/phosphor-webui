@@ -6,16 +6,9 @@ $nav__seclvlWidth: 240px;
 .page-header {
   width: 100%;
   position: relative;
-  border-bottom: 1px solid $lightbg__grey;
+  border-bottom: 1px solid $border-color-02;
   margin: 0.5em 0 2.2em;
   padding-left: 0;
-}
-
-.page-subhead {
-  width: 100%;
-  border-bottom: 1px solid $medgrey;
-  padding-bottom: 0.5em;
-  margin: 1em 0 1em 0;
 }
 
 // Main element class
@@ -50,10 +43,15 @@ $nav__seclvlWidth: 240px;
 
 .content-label,
 label {
-  color: $darkgrey;
+  color: $text-02;
   text-transform: uppercase;
   font-weight: 700;
   font-size: 0.75em;
   margin-bottom: 0;
 }
 
+.subhead {
+  width: 100%;
+  border-bottom: 1px solid $border-color-01;
+  padding-bottom: 0.5em;
+}

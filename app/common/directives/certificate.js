@@ -9,32 +9,9 @@ window.angular && (function(angular) {
         'template': require('./certificate.html'),
         'scope': {'cert': '=', 'reload': '&'},
         'controller': [
-          '$scope', 'APIUtils', 'toastService', 'Constants',
-          function($scope, APIUtils, toastService, Constants) {
+          '$scope', 'APIUtils', 'toastService',
+          function($scope, APIUtils, toastService) {
             var certificateType = 'PEM';
-            var availableCertificateTypes = Constants.CERTIFICATE_TYPES;
-
-            /**
-             * This function is needed to map the backend Description to what
-             * should appear in the GUI. This is needed specifically for CA
-             * certificate types. The backend description for the certificate
-             * type is 'TrustStore Certificate', this function will make sure we
-             * display 'CA Certificate' on the frontend
-             * @param {string} : certificate Description property
-             * @returns {string} : certificate name that should appear on GUI
-             */
-            $scope.getCertificateName = function(certificateDescription) {
-              var matched =
-                  availableCertificateTypes.find(function(certificate) {
-                    return certificate.Description === certificateDescription;
-                  });
-              if (matched === undefined) {
-                return '';
-              } else {
-                return matched.name;
-              }
-            };
-
             $scope.replaceCertificate = function(certificate) {
               $scope.loading = true;
               if (certificate.file.name.split('.').pop() !==
@@ -58,16 +35,14 @@ window.angular && (function(angular) {
                     function(data) {
                       $scope.loading = false;
                       toastService.success(
-                          $scope.getCertificateName(certificate.Description) +
-                          ' was replaced.');
+                          certificate.Description + ' was replaced.');
                       $scope.reload();
                     },
                     function(error) {
                       console.log(error);
                       $scope.loading = false;
                       toastService.error(
-                          'Unable to replace ' +
-                          $scope.getCertificateName(certificate.Description));
+                          'Unable to replace ' + certificate.Description);
                     });
               };
               reader.readAsBinaryString(file);

@@ -46,7 +46,6 @@ import log_event from './common/directives/log-event.js';
 import certificate from './common/directives/certificate.js';
 import log_filter from './common/directives/log-filter.js';
 import log_search_control from './common/directives/log-search-control.js';
-import ldap_user_roles from './common/directives/ldap-user-roles.js';
 import toggle_flag from './common/directives/toggle-flag.js';
 import firmware_list from './common/directives/firmware-list.js';
 import file from './common/directives/file.js';
@@ -85,17 +84,14 @@ import redfish_index from './redfish/index.js';
 import redfish_controller from './redfish/controllers/redfish-controller.js';
 import configuration_index from './configuration/index.js';
 import date_time_controller from './configuration/controllers/date-time-controller.js';
+import certificate_controller from './configuration/controllers/certificate-controller.js';
 import network_controller from './configuration/controllers/network-controller.js';
 import snmp_controller from './configuration/controllers/snmp-controller.js';
 import firmware_controller from './configuration/controllers/firmware-controller.js';
 import vm_controller from './configuration/controllers/virtual-media-controller.js';
 
-import access_control from './access-control/index.js';
-import user_controller from './access-control/controllers/user-controller.js';
-import certificate_controller from './access-control/controllers/certificate-controller.js';
-import ldap_controller from './access-control/controllers/ldap-controller.js';
-
-
+import users_index from './users/index.js';
+import user_accounts_controller from './users/controllers/user-accounts-controller.js';
 
 window.angular && (function(angular) {
   'use strict';
@@ -113,14 +109,15 @@ window.angular && (function(angular) {
             'app.common.filters',
             // Model resources
             'app.login', 'app.overview', 'app.serverControl',
-            'app.serverHealth', 'app.configuration', 'app.accessControl',
-            'app.redfish'
+            'app.serverHealth', 'app.configuration', 'app.users', 'app.redfish'
           ])
       // Route configuration
       .config([
         '$routeProvider', '$locationProvider',
         function($routeProvider, $locationProvider) {
           $locationProvider.hashPrefix('');
+          $routeProvider.when(
+              '/unauthorized', {'template': require('./403.html')})
           $routeProvider.otherwise({'redirectTo': '/login'});
         }
       ])

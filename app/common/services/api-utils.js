@@ -26,31 +26,10 @@ window.angular && (function(angular) {
       var SERVICE = {
         API_CREDENTIALS: Constants.API_CREDENTIALS,
         API_RESPONSE: Constants.API_RESPONSE,
-        CHASSIS_POWER_STATE: Constants.CHASSIS_POWER_STATE,
         HOST_STATE_TEXT: Constants.HOST_STATE,
         LED_STATE: Constants.LED_STATE,
         LED_STATE_TEXT: Constants.LED_STATE_TEXT,
         HOST_SESSION_STORAGE_KEY: Constants.API_CREDENTIALS.host_storage_key,
-        getChassisState: function() {
-          var deferred = $q.defer();
-          $http({
-            method: 'GET',
-            url: DataService.getHost() +
-                '/xyz/openbmc_project/state/chassis0/attr/CurrentPowerState',
-            withCredentials: true
-          })
-              .then(
-                  function(response) {
-                    var json = JSON.stringify(response.data);
-                    var content = JSON.parse(json);
-                    deferred.resolve(content.data);
-                  },
-                  function(error) {
-                    console.log(error);
-                    deferred.reject(error);
-                  });
-          return deferred.promise;
-        },
         validIPV4IP: function(ip) {
           // Checks for [0-255].[0-255].[0-255].[0-255]
           return ip.match(
@@ -634,14 +613,6 @@ window.angular && (function(angular) {
           });
         },
 
-        saveLdapProperties: function(properties) {
-          return $http({
-            method: 'PATCH',
-            url: DataService.getHost() + '/redfish/v1/AccountService',
-            withCredentials: true,
-            data: properties
-          });
-        },
         createUser: function(user, passwd, role, enabled) {
           var data = {};
           data['UserName'] = user;
@@ -1103,12 +1074,15 @@ window.angular && (function(angular) {
                             break;
                           }
                         }
-                        var titlePart = parts.splice(0, numberIndex);
-                        titlePart = titlePart.join('');
-                        titlePart = titlePart[0].toUpperCase() +
-                            titlePart.substr(1, titlePart.length);
-                        var versionPart = parts.join('-');
-                        versions.push({title: titlePart, version: versionPart});
+                        if (numberIndex > 0) {
+                          var titlePart = parts.splice(0, numberIndex);
+                          titlePart = titlePart.join('');
+                          titlePart = titlePart[0].toUpperCase() +
+                              titlePart.substr(1, titlePart.length);
+                          var versionPart = parts.join('-');
+                          versions.push(
+                              {title: titlePart, version: versionPart});
+                        }
                       });
 
                       return versions;
@@ -1396,18 +1370,6 @@ window.angular && (function(angular) {
                 return response.data;
               });
         },
-        createCSRCertificate: function(data) {
-          return $http({
-                   method: 'POST',
-                   url: DataService.getHost() +
-                       '/redfish/v1/CertificateService/Actions/CertificateService.GenerateCSR',
-                   withCredentials: true,
-                   data: data
-                 })
-              .then(function(response) {
-                return response.data['CSRString'];
-              });
-        },
         replaceCertificate: function(data) {
           return $http({
                    method: 'POST',
@@ -1496,17 +1458,37 @@ window.angular && (function(angular) {
             for (var key in content.data) {
               if (content.data.hasOwnProperty(key) &&
                   key.indexOf(Constants.HARDWARE.component_key_filter) == 0) {
-                data = camelcaseToLabel(content.data[key]);
-                searchText = getSearchText(data);
-                title = key.split('/').pop();
                 // All and only associations have the property "endpoints".
-                // We don't want to show associations on the hardware page.
+                // We don't want to show forward/reverse association objects
+                // that the mapper created on the inventory panel.
                 // Example: An association from the BMC inventory item to the
-                // BMC firmware images.
+                // BMC firmware images. See:
+                // https://github.com/openbmc/docs/blob/master/object-mapper.md#associations
                 if (content.data[key].hasOwnProperty('endpoints')) {
                   continue;
                 }
+                // There is also an "Associations" property created by the
+                // Association interface. These would show on the inventory
+                // panel under the individual inventory item dropdown. There
+                // can be a lot of associations in this property and they are
+                // long, full D-Bus paths. Not particularly useful. Remove
+                // for now.
 
+                if (content.data[key].hasOwnProperty('Associations')) {
+                  delete content.data[key].Associations;
+                }
+
+                // Support old Associations interface property
+                // https://github.com/openbmc/phosphor-logging/blob/master/org/openbmc/Associations.interface.yaml
+                // Remove when we move to new Associations interface
+                // openbmc/openbmc#3584
+                if (content.data[key].hasOwnProperty('associations')) {
+                  delete content.data[key].associations;
+                }
+
+                data = camelcaseToLabel(content.data[key]);
+                searchText = getSearchText(data);
+                title = key.split('/').pop();
                 title = titlelize(title);
                 // e.g. /xyz/openbmc_project/inventory/system and
                 // /xyz/openbmc_project/inventory/system/chassis are depths of 5
@@ -1529,6 +1511,7 @@ window.angular && (function(angular) {
                         original_data: {key: key, value: content.data[key]}
                       },
                       {items: data}));
+
 
                   keyIndexMap[key] = hardwareData.length - 1;
                 } else {
