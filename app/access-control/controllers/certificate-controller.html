@@ -5,8 +5,8 @@
   </div>
   <div ng-repeat="certificate in certificates | filter:{isExpiring:true}" class="row column">
     <div class="small-12 alert alert-warning" role="alert">
-      <icon aria-hidden="true" file="icon-warning.svg" /> The uploaded {{certificate.name}} is expiring in {{getDays(certificate.ValidNotAfter) === 0 ? 'less than one
-      day!' : getDays(certificate.ValidNotAfter) + ' days!'}}. Consider replacing it with a new certificate.
+      <icon aria-hidden="true" file="icon-warning.svg" /> The uploaded {{certificate.name}} is expiring in {{getDays(certificate.ValidNotAfter) === 0 ? 'less than one day!'
+      : getDays(certificate.ValidNotAfter) + ' days!'}}. Consider replacing it with a new certificate.
     </div>
   </div>
   <div ng-repeat="certificate in certificates|filter:{isExpired:true}" class="row column">
@@ -101,7 +101,7 @@
     <!-- CSR Code display content-->
     <div ng-if="displayCSRCode==true">
       <div class="page-header add-csr-code__header">
-          <h2>Certificate Signing Request (CSR)</h2>
+        <h2>Certificate Signing Request (CSR)</h2>
       </div>
       <div class="modal__content add-csr__container">
         <span id="csrCode" class="add-csr__container-csr-code">{{csrCode}}</span>
@@ -139,8 +139,7 @@
                 <select class="add-csr__select" id="cert__type" name="cert__type" ng-model="newCSR.certificateCollection" required>
                   <option class="courier-bold" ng-value="default" ng-model="selectOption">Select an option</option>
                   <!-- Do not show CA certificate as an option. Only a certificate authority can generate a CA certificate (known as TrustStore Certificate in Redfish) -->
-                  <option class="courier-bold" ng-value="type" ng-repeat="type in allCertificateTypes"
-                    ng-if="type.Description !== 'TrustStore Certificate'">
+                  <option class="courier-bold" ng-value="type" ng-repeat="type in allCertificateTypes" ng-if="type.Description !== 'TrustStore Certificate'">
                     {{type.name}}</option>
                 </select>
                 <div ng-messages="add__csr__form.cert__type.$error" class="form-error" ng-class="{'visible' : add__csr__form.cert__type.$touched}">
@@ -274,22 +273,15 @@
                     <p ng-message="required">Field is required</p>
                   </div>
                 </div>
-
-                <label for="keyUsage" class="add-csr__label">Key Usage</label>
-                <div class="add-csr__text-helper">Hold the Ctrl, Command or Shift keys while clicking to select or deselect options.</div>
-                <select class="add-csr__multiselect" ng-model="newCSR.keyUsage" multiple id="keyUsage">
-                  <option ng-value="data" ng-repeat="data in keyUsage">{{data}}</option>
-                </select>
               </div>
-            </div>
           </fieldset>
+          </div>
+        </div>
+        <div class="modal__button-wrapper">
+          <button class="btn btn-secondary" ng-click="resetCSRModal();add__csr__form.$setUntouched();">Cancel</button>
+          <button class="btn btn-primary" ng-click="csrSubmitted = true; getCSRCode();add__csr__form.$setUntouched();" ng-disabled="add__csr__form.$invalid">Generate CSR</button>
         </div>
       </div>
-      <div class="modal__button-wrapper">
-        <button class="btn btn-secondary" ng-click="resetCSRModal();add__csr__form.$setUntouched();">Cancel</button>
-        <button class="btn btn-primary" ng-click="csrSubmitted = true; getCSRCode();add__csr__form.$setUntouched();" ng-disabled="add__csr__form.$invalid">Generate CSR</button>
-      </div>
-</div>
-</form>
-</section>
-<div class="modal-overlay" tabindex="-1" ng-class="{'active': addCertificateModal || addCSRModal}"></div>
+    </form>
+  </section>
+  <div class="modal-overlay" tabindex="-1" ng-class="{'active': addCertificateModal || addCSRModal}"></div>
