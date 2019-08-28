@@ -75,10 +75,6 @@
   margin-top: 0 !important;
 }
 
-.btm-border-grey {
-  border-bottom: 1px solid $border-color-02;
-}
-
 .transitionAll {
   transition: all .5s ease;
 }
@@ -134,4 +130,8 @@
 @keyframes flash {
   0% { background: $primary-accent; }
   100% { background: none; }
+}
+
+.nowrap {
+  white-space: nowrap!important;
 }

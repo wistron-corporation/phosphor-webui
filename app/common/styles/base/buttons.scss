@@ -53,6 +53,7 @@ button,
     display: inline-block;
     margin-right: 0.3em;
     vertical-align: bottom;
+    margin-left: -0.5em;
   }
   img {
     width: 1.5em;
@@ -152,5 +153,32 @@ optional actions given on a page.
   }
   .icon {
     fill: $btn-tertiary__txt;
+  }
+}
+
+.btn-password-toggle {
+  position: absolute;
+  right: 0;
+  margin-top: -34px;
+  height: 32px;
+  width: 52px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-right: 0;
+  .icon {
+    margin-right: 0;
+  }
+  &.password-visible {
+    .icon {
+      fill: $btn-tertiary__txt--disabled;
+    }
+  }
+  &.password-hidden {
+    .icon {
+      // Adding tweaks to make sure the icons
+      // are in the same place when toggling show/hide
+      margin-right: 1px;
+      width: 20px;
+    }
   }
 }
