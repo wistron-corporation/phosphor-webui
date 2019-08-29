@@ -78,7 +78,7 @@
   </div>
 </div>
 <section class="modal" aria-hidden="true" role="dialog" ng-class="{'active': addGroup || editGroup}">
-  <h3 class="page-subhead">{{ addGroup ? "Add new role group" : "Edit group privilege" }}</h3>
+  <h3 class="subhead">{{ addGroup ? "Add new role group" : "Edit group privilege" }}</h3>
   <div class="modal__content-ldap">
     <div ng-if="addGroup">
       <form name="add__group__form" id="add__group__form" novalidate>
@@ -146,7 +146,7 @@
   </div>
 </section>
 <section class="modal" aria-hidden="true" role="dialog" ng-class="{'active': removeGroup}">
-  <h3 class="page-subhead">Remove role group</h3>
+  <h3 class="subhead">Remove role group</h3>
   <div class="modal__content-ldap">
     <p>Are you sure you want to remove "{{ newGroup.RemoteGroup }}"?</p>
   </div>

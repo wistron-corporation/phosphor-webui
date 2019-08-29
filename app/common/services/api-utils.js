@@ -530,22 +530,17 @@ window.angular && (function(angular) {
                        '/redfish/v1/AccountService/Roles',
                    withCredentials: true
                  })
-              .then(
-                  function(response) {
-                    var members = response.data['Members'];
-                    angular.forEach(members, function(member) {
-                      roles.push(member['@odata.id'].split('/').pop());
-                    });
-                    return roles;
-                  },
-                  function(error) {
-                    console.log(error);
-                  });
+              .then(function(response) {
+                var members = response.data['Members'];
+                angular.forEach(members, function(member) {
+                  roles.push(member['@odata.id'].split('/').pop());
+                });
+                return roles;
+              });
         },
         getAllUserAccounts: function() {
           var deferred = $q.defer();
           var promises = [];
-          var users = [];
 
           $http({
             method: 'GET',
@@ -581,19 +576,15 @@ window.angular && (function(angular) {
           return deferred.promise;
         },
 
-        getAllUserAccountProperties: function(callback) {
+        getAllUserAccountProperties: function() {
           return $http({
                    method: 'GET',
                    url: DataService.getHost() + '/redfish/v1/AccountService',
                    withCredentials: true
                  })
-              .then(
-                  function(response) {
-                    return response.data;
-                  },
-                  function(error) {
-                    console.log(error);
-                  });
+              .then(function(response) {
+                return response.data;
+              });
         },
 
         saveUserAccountProperties: function(lockoutduration, lockoutthreshold) {
@@ -635,7 +626,7 @@ window.angular && (function(angular) {
             data: data
           });
         },
-        updateUser: function(user, newUser, passwd, role, enabled) {
+        updateUser: function(user, newUser, passwd, role, enabled, locked) {
           var data = {};
           if ((newUser !== undefined) && (newUser != null)) {
             data['UserName'] = newUser;
@@ -648,6 +639,9 @@ window.angular && (function(angular) {
           }
           if ((passwd !== undefined) && (passwd != null)) {
             data['Password'] = passwd;
+          }
+          if ((locked !== undefined) && (locked !== null)) {
+            data['Locked'] = locked
           }
           return $http({
             method: 'PATCH',
@@ -696,6 +690,45 @@ window.angular && (function(angular) {
             data: JSON.stringify({'data': state})
           })
         },
+        getBootOptions: function() {
+          return $http({
+                   method: 'GET',
+                   url: DataService.getHost() + '/redfish/v1/Systems/system',
+                   withCredentials: true
+                 })
+              .then(function(response) {
+                return response.data;
+              });
+        },
+        saveBootSettings: function(data) {
+          return $http({
+            method: 'PATCH',
+            url: DataService.getHost() + '/redfish/v1/Systems/system',
+            withCredentials: true,
+            data: data
+          });
+        },
+        getTPMStatus: function() {
+          return $http({
+                   method: 'GET',
+                   url: DataService.getHost() +
+                       '/xyz/openbmc_project/control/host0/TPMEnable',
+                   withCredentials: true
+                 })
+              .then(function(response) {
+                return response.data;
+              });
+        },
+        saveTPMEnable: function(data) {
+          return $http({
+            method: 'PUT',
+            url: DataService.getHost() +
+                '/xyz/openbmc_project/control/host0/TPMEnable/attr/TPMEnable',
+            withCredentials: true,
+            data: JSON.stringify({'data': data})
+          })
+        },
+
         bmcReboot: function() {
           return $http({
             method: 'PUT',

@@ -10,9 +10,8 @@ window.angular && (function(angular) {
   'use strict';
 
   angular.module('app.accessControl').controller('certificateController', [
-    '$scope', 'APIUtils', '$q', 'Constants', 'toastService', '$timeout',
-    function($scope, APIUtils, $q, Constants, toastService, $timeout) {
-
+    '$scope', 'APIUtils', '$q', 'Constants', 'toastService',
+    function($scope, APIUtils, $q, Constants, toastService) {
       $scope.loading = false;
       $scope.certificates = [];
       $scope.availableCertificateTypes = [];
@@ -26,7 +25,6 @@ window.angular && (function(angular) {
       $scope.csrCode = '';
       $scope.displayCSRCode = false;
       $scope.keyBitLength = Constants.CERTIFICATE.KEY_BIT_LENGTH;
-      $scope.keyUsage = Constants.CERTIFICATE.KEY_USAGE;
       $scope.keyPairAlgorithm = Constants.CERTIFICATE.KEY_PAIR_ALGORITHM;
       $scope.keyCurveId = Constants.CERTIFICATE.KEY_CURVE_ID;
       $scope.countryList = Constants.COUNTRIES;
@@ -154,7 +152,6 @@ window.angular && (function(angular) {
         addCSR.KeyCurveId = $scope.newCSR.keyCurveId || '';
         addCSR.KeyBitLength = $scope.newCSR.keyBitLength
         addCSR.KeyPairAlgorithm = $scope.newCSR.keyPairAlgorithm || '';
-        addCSR.KeyUsage = $scope.newCSR.keyUsage || [];
         addCSR.State = $scope.newCSR.state;
 
         APIUtils.createCSRCertificate(addCSR).then(
@@ -164,9 +161,7 @@ window.angular && (function(angular) {
             },
             function(error) {
               $scope.addCSRModal = false;
-              toastService.error(
-                  'Unable to generate CSR. Log out and try again.');
-              $scope.resetCSRModal()
+              toastService.error('Unable to generate CSR. Try again.');
               console.log(JSON.stringify(error));
             })
       };
@@ -188,7 +183,6 @@ window.angular && (function(angular) {
         $scope.newCSR.firstAlternativeName = '';
         $scope.newCSR.keyBitLength = $scope.selectOption;
         $scope.newCSR.keyPairAlgorithm = $scope.selectOption;
-        $scope.newCSR.keyUsage = [];
         $scope.newCSR.organization = '';
         $scope.newCSR.companyUnit = '';
         $scope.newCSR.state = '';
