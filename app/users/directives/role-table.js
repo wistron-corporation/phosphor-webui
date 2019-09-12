@@ -5,7 +5,7 @@ window.angular && (function(angular) {
    * Role table
    * Table of privilege role descriptions
    */
-  angular.module('app.accessControl').directive('roleTable', [
+  angular.module('app.users').directive('roleTable', [
     '$sce',
     function($sce) {
       return {
