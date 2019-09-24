@@ -29,49 +29,52 @@ window.angular && (function(angular) {
       $scope.loadLdap = function() {
         $scope.loading = true;
         $scope.submitted = false;
-        const getLdapProperties = APIUtils.getAllUserAccountProperties().then(
-            function(data) {
-              const serviceEnabled = data.LDAP.ServiceEnabled ||
-                  data.ActiveDirectory.ServiceEnabled;
-              const ldapServiceEnabled = data.LDAP.ServiceEnabled;
-              const adServiceEnabled = data.ActiveDirectory.ServiceEnabled;
-              const enabledServiceType = getEnabledServiceType(data);
-              const serviceAddresses = getServiceAddresses(data);
-              const useSSL = getUseSSL(data);
-              const userName = getUsername(data);
-              const baseDistinguishedNames = getBaseDistinguishedNames(data);
-              const groupsAttribute = getGroupsAttribute(data);
-              const usernameAttribute = getUsernameAttribute(data);
-              const authenticationType = getAuthenticationType(data);
-              const roleGroups = getRoleGroups(data);
+        const ldapAccountProperties =
+            APIUtils.getAllUserAccountProperties().then(
+                function(data) {
+                  const serviceEnabled = data.LDAP.ServiceEnabled ||
+                      data.ActiveDirectory.ServiceEnabled;
+                  const ldapServiceEnabled = data.LDAP.ServiceEnabled;
+                  const adServiceEnabled = data.ActiveDirectory.ServiceEnabled;
+                  const enabledServiceType = getEnabledServiceType(data);
+                  const serviceAddresses = getServiceAddresses(data);
+                  const useSSL = getUseSsl(data);
+                  const userName = getUsername(data);
+                  const baseDistinguishedNames =
+                      getBaseDistinguishedNames(data);
+                  const groupsAttribute = getGroupsAttribute(data);
+                  const usernameAttribute = getUsernameAttribute(data);
+                  const authenticationType = getAuthenticationType(data);
+                  const roleGroups = getRoleGroups(data);
 
 
-              return {
-                'ServiceEnabled': serviceEnabled,
-                'LDAPServiceEnabled': ldapServiceEnabled,
-                'ADServiceEnabled': adServiceEnabled,
-                'EnabledServiceType': enabledServiceType,
-                'ServiceAddresses': serviceAddresses,
-                'useSSL': useSSL,
-                'Username': userName,
-                'BaseDistinguishedNames': baseDistinguishedNames,
-                'GroupsAttribute': groupsAttribute,
-                'UsernameAttribute': usernameAttribute,
-                'AuthenticationType': authenticationType,
-                'RoleGroups': roleGroups
-              };
-            },
-            function(error) {
-              console.log(JSON.stringify(error));
-            });
+                  return {
+                    'ServiceEnabled': serviceEnabled,
+                    'LDAPServiceEnabled': ldapServiceEnabled,
+                    'ADServiceEnabled': adServiceEnabled,
+                    'EnabledServiceType': enabledServiceType,
+                    'ServiceAddresses': serviceAddresses,
+                    'useSSL': useSSL,
+                    'Username': userName,
+                    'BaseDistinguishedNames': baseDistinguishedNames,
+                    'GroupsAttribute': groupsAttribute,
+                    'UsernameAttribute': usernameAttribute,
+                    'AuthenticationType': authenticationType,
+                    'RoleGroups': roleGroups
+                  };
+                },
+                function(error) {
+                  console.log(JSON.stringify(error));
+                });
 
-        const lDAPCertificate =
+        const ldapCertificate =
             getCertificate('/redfish/v1/AccountService/LDAP/Certificates');
 
         const caCertificate =
             getCertificate('/redfish/v1/Managers/bmc/Truststore/Certificates/');
 
-        var promises = [getLdapProperties, lDAPCertificate, caCertificate];
+        const promises =
+            [ldapAccountProperties, ldapCertificate, caCertificate];
         $q.all(promises).then(function(results) {
           $scope.ldapProperties = results[0];
           $scope.originalLdapProperties = angular.copy(results[0]);
@@ -121,15 +124,6 @@ window.angular && (function(angular) {
                   toastService.error('Unable to update LDAP settings.');
                   console.log(JSON.stringify(error));
                 });
-      };
-
-      /**
-       * Test if URI starts with ldaps
-       * @param {string} uri
-       * @returns {boolean}
-       */
-      function isURISecure(uri) {
-        return uri.startsWith('ldaps://');
       };
 
       /**
@@ -219,14 +213,14 @@ window.angular && (function(angular) {
        * @param {Object} ldapProperties
        * @returns {boolean}
        */
-      function getUseSSL(ldapProperties) {
-        let isSSL = false;
+      function getUseSsl(ldapProperties) {
+        let useSsl = false;
         let serviceType = getEnabledServiceType(ldapProperties);
         if (serviceType) {
-          isSSL =
-              isURISecure(ldapProperties[serviceType]['ServiceAddresses'][0]);
+          const uri = ldapProperties[serviceType]['ServiceAddresses'][0];
+          useSsl = uri.startsWith('ldaps://');
         }
-        return isSSL;
+        return useSsl;
       }
 
       /**
