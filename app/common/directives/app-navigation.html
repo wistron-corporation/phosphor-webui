@@ -50,8 +50,9 @@
         <li ng-class="{'active': (path == '/server-control/kvm')}">
           <a href="#/server-control/kvm" ng-click="closeSubnav()" tabindex="{{(showSubMenu && firstLevel == 'server-control') ? 0 : -1}}">KVM</a>
         </li>
-        <li ng-class="{'active': (path == '/configuration' || path == '/configuration/virtual-media')}">
-          <a href="#/configuration/virtual-media" ng-click="closeSubnav()" tabindex="{{(showSubMenu && firstLevel == 'server-control') ? 0 : -1}}">Virtual media</a>
+        <li ng-class="{'active': (path == '/server-control/virtual-media')}">
+          <a href="#/server-control/virtual-media" ng-click="closeSubnav()"
+            tabindex="{{(showSubMenu && firstLevel == 'server-control') ? 0 : -1}}">Virtual Media</a>
         </li>
       </ul>
     </li>
