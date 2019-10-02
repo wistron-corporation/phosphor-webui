@@ -69,6 +69,8 @@ import password_visibility_toggle from './common/directives/password-visibility-
 import components_index from './common/components/index.js';
 import table_component from './common/components/table/table.js';
 import table_actions_component from './common/components/table/table-actions.js';
+import table_toolbar_component from './common/components/table/table-toolbar.js';
+import table_checkbox from './common/components/table/table-checkbox.js';
 
 import login_index from './login/index.js';
 import login_controller from './login/controllers/login-controller.js';
@@ -82,7 +84,8 @@ import power_operations_controller from './server-control/controllers/power-oper
 import power_usage_controller from './server-control/controllers/power-usage-controller.js';
 import remote_console_window_controller from './server-control/controllers/remote-console-window-controller.js';
 import server_led_controller from './server-control/controllers/server-led-controller.js';
-import kvm_controller from './server-control/controllers/kvm-controller.js';
+import vm_controller from './server-control/controllers/virtual-media-controller.js';
+import kvm_console from './server-control/directives/kvm-console.js';
 
 import server_health_index from './server-health/index.js';
 import inventory_overview_controller from './server-health/controllers/inventory-overview-controller.js';
@@ -99,7 +102,6 @@ import date_time_controller from './configuration/controllers/date-time-controll
 import network_controller from './configuration/controllers/network-controller.js';
 import snmp_controller from './configuration/controllers/snmp-controller.js';
 import firmware_controller from './configuration/controllers/firmware-controller.js';
-import vm_controller from './configuration/controllers/virtual-media-controller.js';
 
 import access_control from './access-control/index.js';
 import user_controller from './access-control/controllers/user-controller.js';

@@ -659,6 +659,26 @@ window.angular && (function(angular) {
             withCredentials: true,
           });
         },
+        removeUserFromIpmi: function(username) {
+          return $http({
+                   method: 'GET',
+                   url: DataService.getHost() +
+                       `/xyz/openbmc_project/user/${username}/attr/UserGroups`,
+                   withCredentials: true
+                 })
+              .then((res) => {
+                const userGroups = res.data.data;
+                return userGroups.filter((group) => group !== 'ipmi');
+              })
+              .then(
+                  (data) => {return $http({
+                    method: 'PUT',
+                    url: DataService.getHost() +
+                        `/xyz/openbmc_project/user/${username}/attr/UserGroups`,
+                    withCredentials: true,
+                    data: {'data': data}
+                  })})
+        },
         chassisPowerOff: function() {
           var deferred = $q.defer();
           $http({
@@ -1537,6 +1557,16 @@ window.angular && (function(angular) {
                 // openbmc/openbmc#3584
                 if (content.data[key].hasOwnProperty('associations')) {
                   delete content.data[key].associations;
+                }
+
+                // Remove the Purpose property from any inventory item.
+                // The purpose property isn't useful to a user.
+                // E.g. in a Power Supply:
+                // Purpose
+                // xyz.openbmc_project.Software.Version.VersionPurpose.Other
+                // Remove when we move inventory to Redfish
+                if (content.data[key].hasOwnProperty('Purpose')) {
+                  delete content.data[key].Purpose;
                 }
 
                 data = camelcaseToLabel(content.data[key]);
