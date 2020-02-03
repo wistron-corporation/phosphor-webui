@@ -75,6 +75,9 @@ import table_checkbox from './common/components/table/table-checkbox.js';
 import login_index from './login/index.js';
 import login_controller from './login/controllers/login-controller.js';
 
+import profile_settings_index from './profile-settings/index.js';
+import profile_settings_controller from './profile-settings/controllers/profile-settings-controller.js';
+
 import overview_index from './overview/index.js';
 import system_overview_controller from './overview/controllers/system-overview-controller.js';
 
@@ -128,7 +131,7 @@ window.angular && (function(angular) {
             // Model resources
             'app.login', 'app.overview', 'app.serverControl',
             'app.serverHealth', 'app.configuration', 'app.accessControl',
-            'app.redfish'
+            'app.redfish', 'app.profileSettings'
           ])
       // Route configuration
       .config([
