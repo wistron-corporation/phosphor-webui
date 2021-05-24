@@ -93,6 +93,23 @@ window.angular && (function(angular) {
                   });
             };
 
+            $scope.loadVpdStatus = function() {
+              APIUtils.getVpdState().then(
+                  function(status) {
+                    if (status ==
+                        'OEM') {
+                      //document.getElementById("IBMHiddenImage").style.display = "none";
+                      console.log('Hide IBM logo');
+                    } else {
+                      //document.getElementById("OemHiddenImage").style.display = "none";
+                      console.log('Hide OEM logo');
+                    }
+                  },
+                  function(error) {
+                    console.log(error);
+                  });
+            };
+
             $scope.loadNetworkInfo = function() {
               if (!userModel.isLoggedIn()) {
                 return;
@@ -119,6 +136,7 @@ window.angular && (function(angular) {
               $scope.loadNetworkInfo();
               $scope.loadServerHealth();
               $scope.loadSystemName();
+              $scope.loadVpdStatus();
               $scope.username = dataService.getUser();
             }
 

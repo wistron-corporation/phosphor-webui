@@ -114,6 +114,26 @@ window.angular && (function(angular) {
                   });
           return deferred.promise;
         },
+        getVpdState: function() {
+          var deferred = $q.defer();
+          $http({
+            method: 'GET',
+            url: DataService.getHost() +
+                '/xyz/openbmc_project/inventory/system/chassis/motherboard/bmc/attr/Model',
+            withCredentials: true
+          })
+              .then(
+                  function(response) {
+                    var json = JSON.stringify(response.data);
+                    var content = JSON.parse(json);
+                    deferred.resolve(content.data);
+                  },
+                  function(error) {
+                    console.log(error);
+                    deferred.reject(error);
+                  });
+          return deferred.promise;
+        },
         getSNMPManagers: function() {
           return $http({
                    method: 'GET',

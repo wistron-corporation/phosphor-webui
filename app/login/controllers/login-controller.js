@@ -25,7 +25,19 @@ window.angular && (function(angular) {
       $scope.successPasswordChange = false;
       $scope.failedPasswordChange = false;
       $scope.passwordReset = {};
-
+      APIUtils.getVpdState().then(
+          function(status) {
+            if (status ==
+                'OEM') {
+              document.getElementById("myImage").style.display = "none";
+              console.log('Hide IBM logo');
+            } else {
+              console.log('Show IBM logo');
+            }
+          },
+          function(error) {
+            console.log(error);
+          });
       $scope.login = function(host, username, password) {
         $scope.serverUnreachable = false;
         $scope.invalidCredentials = false;
