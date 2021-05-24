@@ -98,15 +98,16 @@ window.angular && (function(angular) {
                   function(status) {
                     if (status ==
                         'OEM') {
-                      //document.getElementById("IBMHiddenImage").style.display = "none";
+                      document.getElementById("IBMHiddenImage").style.display = "none";
                       console.log('Hide IBM logo');
                     } else {
-                      //document.getElementById("OemHiddenImage").style.display = "none";
+                      document.getElementById("OemHiddenImage").style.display = "none";
                       console.log('Hide OEM logo');
                     }
                   },
                   function(error) {
-                    console.log(error);
+                    document.getElementById("OemHiddenImage").style.display = "none";
+                    console.log('Hide OEM logo');
                   });
             };
 
