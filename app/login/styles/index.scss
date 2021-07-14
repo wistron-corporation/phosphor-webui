@@ -19,17 +19,9 @@
     left: 0;
     margin-left: 0;
   }
-  .login__logo {
-    max-width: 200px;
-    display: block;
-    margin: 0 auto 2em;
-    @include mediaQuery(small) {
-      margin: 0 auto;
-    }
-  }
 
   .builton__logo {
-    max-width: 200px;
+    max-width: 300px;
     display: block;
     margin: 0 auto 2em;
     @include mediaQuery(small) {
